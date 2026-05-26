@@ -1,8 +1,8 @@
 # GPT Language Model — From Scratch with PyTorch
 
-Sıfırdan PyTorch ile yazılmış, Andrej Karpathy'nin GPT mimarisinden ilham alan bir **Transformer tabanlı dil modeli** projesidir. Model, OpenWebText veri seti üzerinde pre-train edilmiş ve ardından Stanford Alpaca (instruction-tuning) veri seti ile fine-tune edilmiştir.
+Sıfırdan PyTorch ile yazılmış, **Elliot Arledge'ın freeCodeCamp "Create a Large Language Model from Scratch with Python"** eğitiminden ve Andrej Karpathy'nin GPT mimarisinden ilham alan bir **Transformer tabanlı dil modeli** projesidir. Model, OpenWebText veri seti üzerinde pre-train edilmiş ve ardından Stanford Alpaca (instruction-tuning) veri seti ile fine-tune edilmiştir.
 
-> **⚠️ Bu proje herhangi bir yapay zeka asistanı (ChatGPT, Copilot, vb.) kullanılmadan, tamamen elle yazılmıştır.** Tüm model mimarisi, eğitim döngüsü, veri işleme pipeline'ı ve fine-tuning kodu sıfırdan, Andrej Karpathy'nin eğitim videolarından öğrenilerek geliştirilmiştir. Kodlardaki Türkçe yorumlar ve değişken isimleri de bu öğrenme sürecinin bir parçasıdır.
+> **⚠️ Bu proje herhangi bir yapay zeka asistanı (ChatGPT, Copilot, vb.) kullanılmadan, tamamen elle yazılmıştır.** Tüm model mimarisi, eğitim döngüsü, veri işleme pipeline'ı ve fine-tuning kodu sıfırdan, Elliot Arledge'ın freeCodeCamp eğitiminden ve Andrej Karpathy'nin kaynaklarından öğrenilerek geliştirilmiştir. Kodlardaki Türkçe yorumlar ve değişken isimleri de bu öğrenme sürecinin bir parçasıdır.
 
 > **Not:** Bu model bir bigram modeli **değildir**. Multi-Head Self-Attention, FeedForward katmanları, LayerNorm ve residual bağlantılar içeren tam bir GPT-tarzı Transformer mimarisine sahiptir.
 

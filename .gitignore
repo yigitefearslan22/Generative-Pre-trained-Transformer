@@ -1,0 +1,24 @@
+# Model ağırlıkları (çok büyük dosyalar)
+*.pt
+
+# Python sanal ortam
+cuda/
+activate/
+
+# Jupyter checkpoint
+.ipynb_checkpoints/
+
+# Anaconda
+anaconda_projects/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Veri setleri (büyük dosyalar — download_alpaca_data.ipynb ile indirilebilir)
+alpaca_data.json
+
+# OS dosyaları
+Thumbs.db
+.DS_Store

@@ -19,14 +19,17 @@ Sıfırdan PyTorch ile yazılmış, Andrej Karpathy'nin GPT mimarisinden ilham a
 | Dropout oranı | 0.2 |
 | Tokenizer | GPT-2 (tiktoken, ~50k vocab) |
 | Optimizer | AdamW (openwebtext traini için lr = 3e-4)(alpaca fine-tune için lr = 2e-4) |
+| LR Scheduling | Cosine Annealing (eta_min = 1e-6) |
+| Gradient Clipping | max_norm = 1.0 |
+| Sampling | Temperature (0.8) + Top-k (50) |
 
 ### Mimari Bileşenler
 
 - **`Head`** — Tek bir causal self-attention head'i (key, query, value projeksiyonları + causal mask)
-- **`MultiHeadAttention`** — Birden fazla Head'i paralel çalıştırır ve sonuçları birleştirir
-- **`FeedForward`** — İki katmanlı MLP (4x genişleme + ReLU + dropout)
+- **`MultiHeadAttention`** — Birden fazla Head'i paralel çalıştırır, sonuçları birleştirir + residual projection scaling
+- **`FeedForward`** — İki katmanlı MLP (4x genişleme + GELU + dropout) + residual projection scaling
 - **`Block`** — Pre-LayerNorm Transformer bloğu (Self-Attention → FeedForward, residual bağlantılarla)
-- **`GPTLanguageModel`** — Token + pozisyon embedding, N adet Block, son LayerNorm ve linear head
+- **`GPTLanguageModel`** — Token + pozisyon embedding (weight tying), N adet Block, son LayerNorm ve linear head
 
 ---
 
@@ -138,12 +141,12 @@ Tüm model sınıfları burada tanımlıdır: `Head`, `MultiHeadAttention`, `Fee
 - **Hücre 9:** `ai_save_alpaca.pt` dosyasından fine-tuned ağırlıkları yükler
 
 **Sıfırdan veya devam ederek eğitim:**
-- **Hücre 10:** Eğitim döngüsü. AdamW optimizer ile `max_iters` adım eğitir. Her `eval_iters` adımda loss yazdırır ve model kaydeder.
+- **Hücre 10:** Eğitim döngüsü. AdamW optimizer + Cosine Annealing LR scheduler ile `max_iters` adım eğitir. Gradient clipping (max_norm=1.0) ile eğitim stabilitesi sağlanır. Her `eval_iters` adımda loss ve learning rate yazdırır, model kaydeder.
 
 #### Aşama 6 — Metin Üretimi (Inference)
 
-- **Hücre 11 — Serbest üretim:** Boş bir context'ten başlayarak 500 token üretir
-- **Hücre 12 — Sohbet modu:** Bir talimat (instruction) verip modelden cevap alır. Alpaca fine-tuning sonrası `### Talimat:` / `### Cevap:` formatını kullanır
+- **Hücre 11 — Serbest üretim:** Boş bir context'ten başlayarak temperature=0.8 ve top-k=50 sampling ile 500 token üretir
+- **Hücre 12 — Sohbet modu:** Bir talimat (instruction) verip modelden cevap alır. Temperature/top-k sampling ve EOS token durdurma ile `### Talimat:` / `### Cevap:` formatını kullanır
 
 ---
 

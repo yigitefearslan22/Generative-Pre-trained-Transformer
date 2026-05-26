@@ -143,6 +143,16 @@ torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
 
 ---
 
+### D. Model Kaydetme ve Yükleme Yapılandırması (Save/Load Paths)
+Eğitim döngüsünde model ağırlıklarının hangi adla kaydedileceğini belirlemek için notebook'un ikinci hücresine (hiperparametreler) dinamik bir `save_path` parametresi eklenmiştir:
+
+* **Pre-training (Ön Eğitim) Aşaması:** Sıfırdan genel dil eğitimini yapıyorsanız, `save_path = 'ai_save.pt'` olarak ayarlamanız gerekir. Bu sayede modelin temel ağırlıkları kaydedilir.
+* **Fine-tuning (İnce Ayar) Aşaması:** Alpaca gibi talimat/sohbet veri setleriyle çalışıyorsanız, `save_path = 'ai_save_alpaca.pt'` olarak ayarlamalızınız. 
+
+Bu yapı sayesinde, genel dil yeteneklerine sahip temel modelinizin ağırlıkları (`ai_save.pt`) ezilmeden korunur ve asistan yetenekli modeliniz (`ai_save_alpaca.pt`) bağımsız olarak kaydedilir.
+
+---
+
 ## 5. Çıkarım (Inference) ve Örnekleme Algoritmaları
 
 Model eğitildikten sonra, çıktı üretirken ham olasılıkları (logits) doğrudan seçmek yerine yaratıcılığı ve kaliteyi dengeleyen teknikler kullanırız:
